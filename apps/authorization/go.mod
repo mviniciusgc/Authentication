@@ -1,3 +1,3 @@
-module github.com/mviniciusgc/Authentication/apps/authorization
+module authorization
 
 go 1.19
