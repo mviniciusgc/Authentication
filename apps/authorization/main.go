@@ -1,7 +1,14 @@
 package main
 
-import "authorization/src/server"
+import (
+	"authorization/src/server"
+)
+
+type mainService struct {
+	Server server.Services
+}
 
 func main() {
-	server.InitializeServer()
+	var s mainService
+	s.Server.InitializeServer()
 }

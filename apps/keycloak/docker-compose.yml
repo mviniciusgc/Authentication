@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   keycloak:
-    build: ./src/keycloak/config
+    build: ./keycloak/config
     container_name: authentication
     image: quay.io/keycloak/keycloak:21.0.1
     ports:
