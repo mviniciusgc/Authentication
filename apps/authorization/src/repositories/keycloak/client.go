@@ -1,6 +1,6 @@
 package keycloak
 
-type GoCloakClient struct {
+type GoCloakClientRepository struct {
 	ClientID     string
 	ClientSecret string
 	Pass         string

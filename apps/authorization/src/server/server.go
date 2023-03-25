@@ -1,7 +1,7 @@
 package server
 
 import (
-	"authorization/src/routes"
+	"github.com/mviniciusgc/authorization/src/routes"
 )
 
 type Services struct {

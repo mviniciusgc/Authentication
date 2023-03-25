@@ -1,7 +1,7 @@
 package main
 
 import (
-	"authorization/src/server"
+	"github.com/mviniciusgc/authorization/src/server"
 )
 
 type mainService struct {

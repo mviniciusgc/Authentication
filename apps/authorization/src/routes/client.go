@@ -1,32 +1,33 @@
 package routes
 
 import (
-	"authorization/src/keycloak"
-
 	"github.com/go-chi/chi/v5"
+	keycloakController "github.com/mviniciusgc/authorization/src/controller/keycloak"
+	keycloakRepository "github.com/mviniciusgc/authorization/src/repositories/keycloak"
 )
 
 type HandlerServices struct {
-	KeycloakManager keycloak.KeycloakManager
-	Route           *chi.Mux
+	KeycloakController keycloakController.KeycloakController
+	KeycloakRepository keycloakRepository.KeycloakRepository
+	Route              *chi.Mux
 }
 
 func (se HandlerServices) CreateRouterServices() *HandlerServices {
-	a := initializeAuth0Client()
+	a := keycloakController.InitializeKeycloakController()
 	d := &HandlerServices{
-		KeycloakManager: a,
+		KeycloakController: a,
 	}
 	r := Handlers(d)
 	se.Route = r
 	return &se
 }
 
-func initializeAuth0Client() keycloak.KeycloakManager {
-	return &keycloak.GoCloakClient{
-		ClientID:     "",
-		ClientSecret: "",
-		Pass:         "",
-		Realm:        "",
-		User:         "",
-	}
-}
+// func initializeKeycloakController() keycloakController.KeycloakController {
+// 	return &keycloakController.GoCloakClient{
+// 		ClientID:     "",
+// 		ClientSecret: "",
+// 		Pass:         "",
+// 		Realm:        "",
+// 		User:         "",
+// 	}
+// }

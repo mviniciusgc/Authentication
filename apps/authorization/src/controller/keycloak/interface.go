@@ -1,7 +1,7 @@
 package keycloak
 
-type KeycloakManager interface {
-	CreateUserTEST(user string) (string, error)
+type KeycloakController interface {
+	CreateUser(user User) (string, error)
 }
 
 type User struct {

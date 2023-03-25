@@ -1,9 +1,10 @@
-module authorization
+module github.com/mviniciusgc/authorization
 
 go 1.19
 
 require (
 	github.com/Nerzal/gocloak/v11 v11.2.0
+	github.com/go-chi/chi v1.5.4
 	github.com/go-chi/chi/v5 v5.0.8
 )
 

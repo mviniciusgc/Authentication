@@ -4,8 +4,11 @@ import (
 	"fmt"
 )
 
-func (kc *GoCloakClient) CreateUserTEST(user string) (string, error) {
+func (se *GoCloakClient) CreateUser(user User) (string, error) {
+	fmt.Println("bateu no controller")
+	//se.CreateUserTEST(nil)
 	fmt.Println("bateu aqui ", user)
+
 	//kc.RefreshToken()
 	// ctx := context.Background()
 	// credentials := gocloak.CredentialRepresentation{
