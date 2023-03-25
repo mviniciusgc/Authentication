@@ -1,19 +1,15 @@
 package keycloak
 
-type GoCloakClient struct {
-	ClientID     string
-	ClientSecret string
-	Pass         string
-	Realm        string
-	User         string
+import (
+	keycloakRepository "github.com/mviniciusgc/authorization/src/repositories/keycloak"
+)
+
+type GoCloakClientController struct {
+	keycloakRepository keycloakRepository.KeycloakRepository
 }
 
-func InitializeKeycloakController() KeycloakController {
-	return &GoCloakClient{
-		ClientID:     "",
-		ClientSecret: "",
-		Pass:         "",
-		Realm:        "",
-		User:         "",
+func InitializeKeycloakController(kcr keycloakRepository.KeycloakRepository) KeycloakController {
+	return &GoCloakClientController{
+		keycloakRepository: kcr,
 	}
 }

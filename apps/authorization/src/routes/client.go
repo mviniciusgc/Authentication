@@ -8,26 +8,16 @@ import (
 
 type HandlerServices struct {
 	KeycloakController keycloakController.KeycloakController
-	KeycloakRepository keycloakRepository.KeycloakRepository
 	Route              *chi.Mux
 }
 
 func (se HandlerServices) CreateRouterServices() *HandlerServices {
-	a := keycloakController.InitializeKeycloakController()
+	krr := keycloakRepository.InitializeKeycloakRepository()
+	krc := keycloakController.InitializeKeycloakController(krr)
 	d := &HandlerServices{
-		KeycloakController: a,
+		KeycloakController: krc,
 	}
 	r := Handlers(d)
 	se.Route = r
 	return &se
 }
-
-// func initializeKeycloakController() keycloakController.KeycloakController {
-// 	return &keycloakController.GoCloakClient{
-// 		ClientID:     "",
-// 		ClientSecret: "",
-// 		Pass:         "",
-// 		Realm:        "",
-// 		User:         "",
-// 	}
-// }
