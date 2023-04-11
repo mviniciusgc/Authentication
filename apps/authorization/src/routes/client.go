@@ -11,13 +11,16 @@ type HandlerServices struct {
 	Route              *chi.Mux
 }
 
-func (se HandlerServices) CreateRouterServices() *HandlerServices {
-	krr := keycloakRepository.InitializeKeycloakRepository()
+func (se HandlerServices) CreateRouterServices() (*HandlerServices, error) {
+	krr, err := keycloakRepository.InitializeKeycloakRepository()
+	if err != nil {
+		return nil, err
+	}
 	krc := keycloakController.InitializeKeycloakController(krr)
 	d := &HandlerServices{
 		KeycloakController: krc,
 	}
 	r := Handlers(d)
 	se.Route = r
-	return &se
+	return &se, nil
 }

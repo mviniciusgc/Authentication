@@ -1,7 +1,7 @@
 package keycloak
 
-import "github.com/Nerzal/gocloak/v11"
+import "github.com/Nerzal/gocloak/v13"
 
 type KeycloakRepository interface {
-	CreateUserTEST(user *gocloak.User) (string, error)
+	CreateUser(user gocloak.User) (*string, error)
 }

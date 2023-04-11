@@ -1,7 +1,9 @@
 package keycloak
 
+import "github.com/mviniciusgc/authorization/src/entity"
+
 type KeycloakController interface {
-	CreateUser(user User) (string, error)
+	CreateUser(user entity.UserRequest) (*entity.UserResponse, error)
 }
 
 type User struct {

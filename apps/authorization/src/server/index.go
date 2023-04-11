@@ -7,10 +7,12 @@ import (
 )
 
 func (s Services) InitializeServer() {
-	r := s.HandlerServer.CreateRouterServices()
+	r, err := s.HandlerServer.CreateRouterServices()
+	if err != nil {
+		log.Fatal(fmt.Errorf("failed to initialize services: %w", err))
+	}
 
-	fmt.Println("Initialize server in port 8082")
-	err := http.ListenAndServe(":8082", r.Route)
+	err = http.ListenAndServe(":8082", r.Route)
 	if err != nil {
 		log.Fatal("Error initialize the server")
 	}

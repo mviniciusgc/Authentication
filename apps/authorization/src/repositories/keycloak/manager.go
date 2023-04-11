@@ -1,30 +1,21 @@
 package keycloak
 
 import (
-	"fmt"
+	"context"
 
-	"github.com/Nerzal/gocloak/v11"
+	"github.com/Nerzal/gocloak/v13"
+	"github.com/mviniciusgc/authorization/src/utils/middleware"
 )
 
-func (s *GoCloakClientRepository) CreateUserTEST(user *gocloak.User) (string, error) {
-	fmt.Println("bateu aqui no repository")
-	//kc.RefreshToken()
-	// ctx := context.Background()
-	// credentials := gocloak.CredentialRepresentation{
-	// 	Type:      gocloak.StringP("password"),
-	// 	Value:     gocloak.StringP("123456"),
-	// 	Temporary: gocloak.BoolP(false),
-	// }
+func (s *GoCloakClientRepository) CreateUser(user gocloak.User) (*string, error) {
+	s.RefreshToken(s.MainRealm)
+	ctx := context.Background()
 
-	// newUser := gocloak.User{
-	// 	FirstName:   gocloak.StringP("marcos"),
-	// 	LastName:    gocloak.StringP("vinicius"),
-	// 	Email:       gocloak.StringP("marcos@gmail.com"),
-	// 	Enabled:     gocloak.BoolP(true),
-	// 	Username:    gocloak.StringP("mvinicius"),
-	// 	Credentials: &[]gocloak.CredentialRepresentation{credentials},
-	// }
+	userID, err := s.Client.CreateUser(ctx, s.Token.AccessToken, s.Realm, user)
+	err = middleware.VerifyErrors(err, "")
+	if err != nil {
+		return nil, err
+	}
 
-	//return kc.Client.CreateUser(ctx, kc.Token.AccessToken, kc.Realm, newUser)
-	return "ok", nil
+	return &userID, nil
 }
