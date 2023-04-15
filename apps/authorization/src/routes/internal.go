@@ -8,17 +8,17 @@ import (
 	"github.com/mviniciusgc/authorization/src/utils/errors"
 )
 
-func authenticate(s *HandlerServices) http.HandlerFunc {
+func createUser(s *HandlerServices) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 
-		authenticate := &entity.AuthenticateRequest{}
-		err := json.NewDecoder(r.Body).Decode(&authenticate)
+		user := &entity.UserRequest{}
+		err := json.NewDecoder(r.Body).Decode(&user)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		resp, err := s.KeycloakController.Authenticate(*authenticate)
+		resp, err := s.KeycloakController.CreateUser(*user)
 		if err != nil {
 			err, errByte := errors.GetErrorBody(err)
 			w.WriteHeader(*err.Err.Code)
@@ -26,9 +26,9 @@ func authenticate(s *HandlerServices) http.HandlerFunc {
 			return
 		}
 
-		token, _ := json.Marshal(resp)
+		userResp, _ := json.Marshal(resp)
 
 		w.WriteHeader(http.StatusCreated)
-		w.Write(token)
+		w.Write(userResp)
 	})
 }

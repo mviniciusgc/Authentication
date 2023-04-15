@@ -12,7 +12,7 @@ func (s *GoCloakClientRepository) CreateUser(user gocloak.User) (*string, error)
 	ctx := context.Background()
 
 	userID, err := s.Client.CreateUser(ctx, s.Token.AccessToken, s.Realm, user)
-	err = middleware.VerifyErrors(err, "")
+	err = middleware.VerifyErrors(err, "CreateUser")
 	if err != nil {
 		return nil, err
 	}
