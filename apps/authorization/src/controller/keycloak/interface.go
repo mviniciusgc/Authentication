@@ -5,8 +5,9 @@ import (
 )
 
 type KeycloakController interface {
-	CreateUser(user entity.UserRequest) (*entity.UserResponse, error)
 	Authenticate(authenticate entity.AuthenticateRequest) (*entity.TokenResponse, error)
+	CreateUser(user entity.UserRequest) (*entity.UserResponse, error)
+	RefreshUserToken(RefreshToken entity.RefreshTokenRequest) (*entity.TokenResponse, error)
 }
 
 type User struct {

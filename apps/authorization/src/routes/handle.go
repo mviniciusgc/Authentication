@@ -14,6 +14,7 @@ func Handlers(s *HandlerServices) *chi.Mux {
 
 	r.Route("/api/external", func(r chi.Router) {
 		r.Post("/authenticate", authenticate(s))
+		r.Post("/refresh", refreshToken(s))
 	})
 
 	return r
