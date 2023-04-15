@@ -8,11 +8,12 @@ import (
 func Handlers(s *HandlerServices) *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	r.Route("/api/internal", func(r chi.Router) {
+	r.Route("/api/internal/user", func(r chi.Router) {
 		r.Post("/", createUser(s))
+		r.Patch("/updateUser/{userID}", UpdateUser(s))
 	})
 
-	r.Route("/api/external", func(r chi.Router) {
+	r.Route("/api/external/user", func(r chi.Router) {
 		r.Post("/authenticate", authenticate(s))
 		r.Post("/refresh", refreshToken(s))
 	})

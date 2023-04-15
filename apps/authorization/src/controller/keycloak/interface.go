@@ -8,6 +8,7 @@ type KeycloakController interface {
 	Authenticate(authenticate entity.AuthenticateRequest) (*entity.TokenResponse, error)
 	CreateUser(user entity.UserRequest) (*entity.UserResponse, error)
 	RefreshUserToken(RefreshToken entity.RefreshTokenRequest) (*entity.TokenResponse, error)
+	UpdateUser(authenticate entity.UserUpdateRequest, userID string) error
 }
 
 type User struct {

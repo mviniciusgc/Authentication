@@ -28,7 +28,7 @@ func authenticate(s *HandlerServices) http.HandlerFunc {
 
 		token, _ := json.Marshal(resp)
 
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
 		w.Write(token)
 	})
 }
@@ -53,7 +53,7 @@ func refreshToken(s *HandlerServices) http.HandlerFunc {
 
 		token, _ := json.Marshal(resp)
 
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
 		w.Write(token)
 	})
 }
