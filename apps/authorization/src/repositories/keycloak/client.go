@@ -5,20 +5,22 @@ import (
 	"time"
 
 	"github.com/Nerzal/gocloak/v13"
+	"github.com/mviniciusgc/authorization/src/repositories/keycloak/utils"
 	"github.com/mviniciusgc/authorization/src/utils/errors"
 	"github.com/spf13/viper"
 )
 
 type GoCloakClientRepository struct {
-	Client        *gocloak.GoCloak
-	ClientID      string
-	MainRealm     string
-	ClientSecret  string
-	Pass          string
-	User          string
-	Realm         string
-	TokenExpireAt time.Time
-	Token         *gocloak.JWT
+	Client          *gocloak.GoCloak
+	ClientID        string
+	MainRealm       string
+	ClientSecret    string
+	Pass            string
+	User            string
+	Realm           string
+	TokenExpireAt   time.Time
+	Token           *gocloak.JWT
+	HandlerServices *utils.Jwks
 }
 
 func InitializeKeycloakRepository() (KeycloakRepository, error) {
@@ -36,6 +38,10 @@ func InitializeKeycloakRepository() (KeycloakRepository, error) {
 		return nil, errors.NewError(&errors.Error{Op: "InitializeGoCloakClient", Message: "Missing KeyCloak credentials"})
 	}
 
+	// jwks, err := utils.CreateRouterServices()
+	// if err != nil {
+	// 	return nil, err
+	// }
 	client := gocloak.NewClient(keycloackDomain, gocloak.SetAuthAdminRealms("admin/realms"), gocloak.SetAuthRealms("/realms"))
 	kc := &GoCloakClientRepository{
 		ClientID:     keycloackClientID,
@@ -45,6 +51,7 @@ func InitializeKeycloakRepository() (KeycloakRepository, error) {
 		Realm:        keycloackRealm,
 		Client:       client,
 		MainRealm:    keycloackMainRealm,
+		//HandlerServices: jwks,
 	}
 	kc.RefreshToken(keycloackMainRealm)
 

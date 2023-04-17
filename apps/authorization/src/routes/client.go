@@ -4,11 +4,13 @@ import (
 	"github.com/go-chi/chi/v5"
 	keycloakController "github.com/mviniciusgc/authorization/src/controller/keycloak"
 	keycloakRepository "github.com/mviniciusgc/authorization/src/repositories/keycloak"
+	"github.com/mviniciusgc/authorization/src/utils/middleware"
 )
 
 type HandlerServices struct {
 	KeycloakController keycloakController.KeycloakController
 	Route              *chi.Mux
+	middleware         middleware.Middleware
 }
 
 func (se HandlerServices) CreateRouterServices() (*HandlerServices, error) {
@@ -17,8 +19,10 @@ func (se HandlerServices) CreateRouterServices() (*HandlerServices, error) {
 		return nil, err
 	}
 	krc := keycloakController.InitializeKeycloakController(krr)
+	mw := middleware.InitializeMiddleware()
 	d := &HandlerServices{
 		KeycloakController: krc,
+		middleware:         mw,
 	}
 	r := Handlers(d)
 	se.Route = r

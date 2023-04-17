@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/Nerzal/gocloak/v13"
-	"github.com/mviniciusgc/authorization/src/utils/middleware"
+	"github.com/mviniciusgc/authorization/src/repositories/keycloak/utils"
 )
 
 func (s *GoCloakClientRepository) RefreshUserToken(RefreshToken string) (*gocloak.JWT, error) {
@@ -12,7 +12,7 @@ func (s *GoCloakClientRepository) RefreshUserToken(RefreshToken string) (*gocloa
 	ctx := context.Background()
 
 	token, err := s.Client.RefreshToken(ctx, RefreshToken, s.ClientID, s.ClientSecret, s.Realm)
-	err = middleware.VerifyErrors(err, "RefreshUserToken")
+	err = utils.VerifyErrors(err, "RefreshUserToken")
 	if err != nil {
 		return nil, err
 	}

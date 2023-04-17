@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/Nerzal/gocloak/v13"
-	"github.com/mviniciusgc/authorization/src/utils/middleware"
+	"github.com/mviniciusgc/authorization/src/repositories/keycloak/utils"
 )
 
 func (s *GoCloakClientRepository) Authenticate(username string, password string) (*gocloak.JWT, error) {
@@ -12,7 +12,7 @@ func (s *GoCloakClientRepository) Authenticate(username string, password string)
 	ctx := context.Background()
 
 	token, err := s.Client.Login(ctx, s.ClientID, s.ClientSecret, s.Realm, username, password)
-	err = middleware.VerifyErrors(err, "Authenticate")
+	err = utils.VerifyErrors(err, "Authenticate")
 	if err != nil {
 		return nil, err
 	}

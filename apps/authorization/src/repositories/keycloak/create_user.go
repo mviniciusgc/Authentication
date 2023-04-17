@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/Nerzal/gocloak/v13"
-	"github.com/mviniciusgc/authorization/src/utils/middleware"
+	"github.com/mviniciusgc/authorization/src/repositories/keycloak/utils"
 )
 
 func (s *GoCloakClientRepository) CreateUser(user gocloak.User) (*string, error) {
@@ -12,7 +12,7 @@ func (s *GoCloakClientRepository) CreateUser(user gocloak.User) (*string, error)
 	ctx := context.Background()
 
 	userID, err := s.Client.CreateUser(ctx, s.Token.AccessToken, s.Realm, user)
-	err = middleware.VerifyErrors(err, "CreateUser")
+	err = utils.VerifyErrors(err, "CreateUser")
 	if err != nil {
 		return nil, err
 	}

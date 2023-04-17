@@ -2,6 +2,7 @@ package routes
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -36,6 +37,15 @@ func createUser(s *HandlerServices) http.HandlerFunc {
 func UpdateUser(s *HandlerServices) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
+		authHeader := r.Header.Get("Authorization")
+		err := s.middleware.ParseToken(authHeader)
+		if err != nil {
+			fmt.Println("sdasdsad ", err)
+			_, errByte := errors.GetErrorBody(err)
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write(errByte)
+			return
+		}
 
 		userID := chi.URLParam(r, "userID")
 		if userID == "" {
@@ -44,7 +54,7 @@ func UpdateUser(s *HandlerServices) http.HandlerFunc {
 		}
 
 		user := &entity.UserUpdateRequest{}
-		err := json.NewDecoder(r.Body).Decode(&user)
+		err = json.NewDecoder(r.Body).Decode(&user)
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
 			return

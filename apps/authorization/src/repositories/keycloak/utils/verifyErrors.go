@@ -1,4 +1,4 @@
-package middleware
+package utils
 
 import (
 	"github.com/Nerzal/gocloak/v13"
