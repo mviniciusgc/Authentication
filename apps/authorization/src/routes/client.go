@@ -18,6 +18,7 @@ func (se HandlerServices) CreateRouterServices() (*HandlerServices, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	krc := keycloakController.InitializeKeycloakController(krr)
 	mw := middleware.InitializeMiddleware()
 	d := &HandlerServices{

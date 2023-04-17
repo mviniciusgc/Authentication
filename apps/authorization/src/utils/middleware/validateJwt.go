@@ -69,16 +69,12 @@ func getTokenFormated(token string) (string, error) {
 	if token == "" || !strings.HasPrefix(token, "Bearer ") {
 		return "", errors.NewError(&errors.Error{Op: "ValidateToken", Message: "Missing header", Code: errors.EUNAUTHORIZED})
 	}
-	//fmt.Printf("New token  %+v\n", token)
-	//tokenString := token[7:]
 	tokenString := strings.TrimPrefix(token, "Bearer ")
-	//fmt.Printf("New token  %+v\n", tokenString)
 
 	return tokenString, nil
 }
 
 func (p HandlerServices) ParseToken(tokenString string) error {
-	fmt.Println("sdasdsad ")
 	tokenString, err := getTokenFormated(tokenString)
 	if err != nil {
 		return errors.NewError(&errors.Error{Op: "tokenparser.Auth0TokenParser.parseToken", Message: "roles domain not found in token"})
